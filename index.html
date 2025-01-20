@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support and Resistance Level Calculator</title>
+    
+    <!-- CSS Styling -->
+    <style>
+        /* General Body Styling */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #6e7f8d, #a2b9c3); /* Gradient background */
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Heading */
+        h1 {
+            color: #ffffff;
+            margin-top: 10px;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4); /* Add shadow to text for effect */
+        }
+
+        /* Owner Section */
+        .owner {
+            margin-top: 5px;
+            font-size: 1.5rem; /* Increase font size for better visibility */
+            font-weight: bold;
+            color: #ffeb3b; /* Bright yellow to contrast with background */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Shadow for better readability */
+        }
+
+        /* Note Section */
+        .note {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for floating effect */
+            color: #333;
+            font-size: 0.9rem;
+            text-align: center;
+            width: 90%;
+            max-width: 350px;
+        }
+
+        /* Calculator Container */
+        div {
+            background-color: #ffffff;
+            border-radius: 15px; /* Rounded corners for the container */
+            padding: 40px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Soft shadow for floating effect */
+            width: 350px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        /* Input Fields */
+        input[type="number"] {
+            width: 80%;
+            padding: 12px 15px;
+            font-size: 16px;
+            margin: 15px 0;
+            border-radius: 10px; /* Round corners for inputs */
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            transition: all 0.3s ease-in-out;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #007bff; /* Blue border when the input is focused */
+            background-color: #f0f8ff;
+        }
+
+        /* Button */
+        button {
+            width: 80%;
+            padding: 14px;
+            background-color: #007bff;
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 10px; /* Rounded button */
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+        }
+
+        button:hover {
+            background-color: #0056b3; /* Darken the button color on hover */
+            transform: scale(1.05); /* Slight zoom effect on hover */
+        }
+
+        button:active {
+            transform: scale(1); /* Reset size on click */
+        }
+
+        /* Result Section */
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+
+        #result h2 {
+            color: #007bff;
+            font-size: 1.6rem;
+            font-weight: bold;
+        }
+
+        #result p {
+            margin: 8px 0;
+            font-size: 1.2rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            div {
+                width: 90%; /* Make the calculator container smaller on mobile */
+            }
+
+            h1 {
+                font-size: 2rem; /* Smaller heading on small screens */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Support and Resistance Level Calculator</h1>
+    <div class="owner">Created by: Zahid Kashmiri</div>
+
+    <!-- Input Fields for High and Low -->
+    <div>
+        <label for="high">Enter High:</label>
+        <input type="number" id="high" placeholder="Enter High value" step="any">
+        <br>
+        <label for="low">Enter Low:</label>
+        <input type="number" id="low" placeholder="Enter Low value" step="any">
+        <br>
+        <button onclick="calculateLevels()">Calculate</button>
+    </div>
+
+    <!-- Section to Display the Results -->
+    <div id="result">
+        <!-- The calculation results will be displayed here -->
+    </div>
+
+    <!-- Note Section -->
+    <div class="note">
+        <p><strong>Note:</strong></p>
+        <ul style="text-align: left;">
+            <li>For the Indian market, use the High and Low of the first 15-minute candle.</li>
+            <li>For Crypto and Forex markets, use the first 15-minute candle's High and Low on every session.</li>
+        </ul>
+        <p>Good luck, and keep supporting!</p>
+    </div>
+
+    <script>
+        function calculateLevels() {
+            // Get the High and Low values from user input
+            let high = parseFloat(document.getElementById('high').value);
+            let low = parseFloat(document.getElementById('low').value);
+
+            // Validate input values
+            if (isNaN(high) || isNaN(low)) {
+                alert("Please enter valid High and Low values.");
+                return;
+            }
+
+            // Calculate the difference and middle value
+            let diff = high - low;
+            let middleValue = diff / 2;
+
+            // Calculate Resistance Levels
+            let r1 = high + middleValue;
+            let r2 = r1 + diff;
+            let r3 = r2 + middleValue;
+            let r4 = r3 + diff;
+            let r5 = r4 + middleValue;
+
+            // Calculate Support Levels
+            let s1 = low - middleValue;
+            let s2 = s1 - diff;
+            let s3 = s2 - middleValue;
+            let s4 = s3 - diff;
+            let s5 = s4 - middleValue;
+
+            // Calculate the Middle Line
+            let middleLine = (high + low) / 2;
+
+            // Display the results in the result section
+            let resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `
+                <h2>Calculated Levels:</h2>
+                <p><strong>Resistance Levels:</strong> R1: ${r1.toFixed(2)}, R2: ${r2.toFixed(2)}, R3: ${r3.toFixed(2)}, R4: ${r4.toFixed(2)}, R5: ${r5.toFixed(2)}</p>
+                <p><strong>Support Levels:</strong> S1: ${s1.toFixed(2)}, S2: ${s2.toFixed(2)}, S3: ${s3.toFixed(2)}, S4: ${s4.toFixed(2)}, S5: ${s5.toFixed(2)}</p>
+                <p><strong>Middle Line:</strong> ${middleLine.toFixed(2)}</p>
+            `;
+        }
+    </script>
+
+</body>
+</html>
